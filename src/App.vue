@@ -255,7 +255,7 @@ html {
 
 .fp-slideNav {
   ul li a span {
-    background: red !important;
+    background: blue !important;
   }
 }
 
