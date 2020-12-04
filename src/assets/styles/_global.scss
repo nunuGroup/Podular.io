@@ -49,9 +49,9 @@ $drag: 2s;
 }
 
 .stage-right {
-  transform: translate(500px, 0px);
+  transform: translate(200px, 0px) scale(0.8);
   opacity: 0 !important;
-  transition: 2s $ezpz !important;
+  transition: 1.5s $ezpz !important;
   transition-delay: 0ms;
 }
 
@@ -259,3 +259,25 @@ $drag: 2s;
   $logoText: url('../assets/podular-text-white.png');
   $wave: url('../assets/wave.svg');
   $wave2: url('../assets/wave2.svg');
+
+  // ---------- mobile ----------
+
+@media only screen and (max-width: 768px) {
+  .big-image2-enter {
+    width: 100vw !important;
+    transition-delay: 950ms !important;
+    transition: 3s $ezpz;
+    opacity: 1;
+  }
+
+  .big-image-enter {
+    width: 100vw !important;
+    //transition-delay: 1s !important;
+    transition: 3s $ezpz;
+    opacity: 1;
+  
+    .lil-wave {
+      //filter: brightness(1);
+    }
+  }
+}

@@ -119,7 +119,9 @@ export default {
     }, 5000);
   },
   computed: {
-
+    isMobile() {
+      return ( window.innerWidth < 768 ? true : false );
+    }
   },
   methods: {
     handleLeave(origin, destination, direction) {
@@ -223,6 +225,10 @@ export default {
     enterOn(section, context) {
       if(context == 'default') {
         return ( this.activeSection == (section - 1) ? 'enter' : 'stage-in' ) // TODO: adjust for up and down transitions
+      } else if(context == 'stage-right') {
+        return ( this.activeSection == (section - 1) ? 'enter' : 'stage-right' )
+      } else if(context == 'stage-left') {
+        return ( this.activeSection == (section - 1) ? 'enter' : 'stage-left' )
       } else if(context == 'delay') {
         return ( this.activeSection == (section - 1) ? 'delay-enter' : 'delay-stage' )
       } else if(context == 'big-image') {
@@ -302,10 +308,10 @@ export default {
   <div class="home">
 
     <div :class="( modalActive ? 'modal-active' : 'modal-inactive' )" class="modal-container">
-      <div @click="() => { modalActive = false; }" class="exit-button hoverable">X</div>
+      <div @click="() => { modalActive = false; }" class="exit-button hoverable">{{ !isMobile ? 'X' : '🡠' }}</div>
       <div class="modal">
         <iframe class="iframe" v-if="modalContext == 'showroom'" src="https://wix.viar.live/embed/tour/tdodwm" width="400px" height="400px"></iframe>
-        <img v-if="modalContext == 'gallery'" :src="currentModalImage" style="border-radius: 12px" height="700px"/>
+        <img v-if="modalContext == 'gallery'" :src="currentModalImage" style="border-radius: 12px" width="700px"/>
       </div>
     </div>
 
@@ -366,7 +372,6 @@ export default {
                   <p :class="enterOn(2, 'default')">{{ text.about }}</p>
                   <div class="button-container">
                     <div @click="move(3)" class="arrows hoverable" :class="enterOn(2, 'arrows')"></div>
-                    <div class="slide-button hoverable" @click="moveRight()"><div class="arrows arrows2 hoverable"></div></div>
                   </div>
                 </div>
               </div>
@@ -374,13 +379,14 @@ export default {
                 <div class="wave-container"><div class="lil-wave" :class="enterOn(2, 'wave')"></div></div>
               </div>
             </div>
+            <div class="bottom-bar">
+              <div :class="enterOn(2, 'default')"><div :class="( isMobile ? 'gal-button ' : '' )" class="slide-button hoverable" @click="moveRight()">{{ isMobile ? 'View Gallery' : ''  }}<div v-if="!isMobile" class="arrows arrows2 hoverable"></div></div></div>
+            </div>
           </div>        
         </div>
         <div style="background: black" class="slide">
           <div class="page-container">
             <!-- GRID -->
-
-            <div class="slide-button back hoverable" @click="moveLeft()"><div class="arrows arrows2 hoverable"></div></div>
 
             <div :class="( modalActive ? 'modal-active' : 'modal-inactive' )" class="gallery-modal-container">
               <div class="gallery-modal">Image not found</div>
@@ -397,7 +403,9 @@ export default {
                 @click="handleGalleryItemClick(i)"
               ></div>
             </div>
-
+            <div class="bottom-bar bottom-bar2">
+              <div class="slide-button back hoverable" @click="moveLeft()"><div class="arrows arrows2 hoverable"></div></div>
+            </div>
           </div>        
         </div>
       </section>
@@ -410,7 +418,9 @@ export default {
               <div class="about-text">
                 <div class="about-text-inner">
                   <p :class="enterOn(3, 'delay')">{{ text.about2 }}</p>
-                  <div @click="move(4)" class="arrows hoverable" :class="enterOn(3, 'arrows')"></div>
+                  <div class="button-container">
+                    <div @click="move(4)" class="arrows hoverable" :class="enterOn(3, 'arrows')"></div>
+                  </div>
                 </div>
               </div>
               <div id="big-image2" class="image-slides full-image" :class="enterOn(3, 'big-image2')">
@@ -492,6 +502,27 @@ export default {
 
 <style lang="scss" scoped>
 @import '../assets/styles/global';
+
+.gal-button {
+  background: white !important;
+  color: black;
+  height: 40px !important;
+  width: 150px !important;
+  border-radius: 12px !important;
+}
+
+.bottom-bar {
+  position: absolute;
+  //background: red;
+  height: 150px;
+  width: 100vw;
+  z-index: 9999;
+  bottom: 0px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 80px;
+}
 
 .contact {
   flex-direction: column;
@@ -816,7 +847,7 @@ export default {
 }
 
 .back {
-  right: 100px !important;
+  //right: 100px !important;
   transform: rotate(180deg) !important;
   background: black !important;
 }
@@ -825,7 +856,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  //position: absolute;
   //margin: auto;
   height: 80px;
   width: 80px;
@@ -845,7 +876,7 @@ export default {
 
 .arrow-button {
   background: black;
-  position: absolute;
+  //position: absolute;
   //transform: rotate(270deg) scale(1) !important;
   cursor: pointer !important;
   z-index: 999;
@@ -873,7 +904,7 @@ export default {
 
 .arrows2 {
   margin-right: 12px !important;
-  margin-top: -8px !important;
+  margin-top: 4px !important;
   transform: rotate(270deg) scale(0.4) !important;
 }
 

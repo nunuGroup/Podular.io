@@ -1,34 +1,4 @@
-<template>
-  <div id="app">
-    <div v-if="step3" :class="(unveil ? 'swoop' : '' )" class="logo-loader"></div>
-    <div :class="(unveil ? 'loading-veil unveil' : 'loading-veil')">
-      <svg v-if="!step2 && !step3" width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle id="initial-logo" cx="100" cy="100" r="72.5" stroke="white" stroke-width="55"/>
-      </svg>
-      <div v-if="step2 && !step3" class="chunk-logo">
-        <div class="chunk-big">
-          <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M100 0C44.7715 0 0 44.7715 0 100C0 155.228 44.7715 200 100 200C155.228 200 200 155.228 200 100C200 44.7715 155.228 0 100 0ZM100 55.2504C75.2855 55.2504 55.2504 75.2855 55.2504 100C55.2504 124.715 75.2855 144.75 100 144.75C124.715 144.75 144.75 124.715 144.75 100C144.75 75.2855 124.715 55.2504 100 55.2504ZM200 99.8385H144.749C144.749 99.8923 144.75 99.9461 144.75 100C144.75 124.715 124.715 144.75 100 144.75C99.9461 144.75 99.8923 144.749 99.8385 144.749V200C99.8923 200 99.9461 200 100 200C155.228 200 200 155.228 200 100C200 99.9461 200 99.8923 200 99.8385Z" fill="white"/>
-          </svg>
-        </div>
-        <div class="chunk-small">
-          <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M99.9999 2.41118e-06L44.8384 0C44.8386 0.0537423 44.8387 0.107507 44.8387 0.161294C44.8387 24.836 24.8359 44.8387 0.16129 44.8387C0.107505 44.8387 0.0537411 44.8386 0 44.8384V99.9999C0.0537535 100 0.107517 100 0.16129 100C55.3007 100 100 55.3007 100 0.161294C100 0.10752 100 0.0537562 99.9999 2.41118e-06Z" fill="#FFFFFF"/>
-          </svg>
-        </div>
-      </div>
-      <!--div v-if="step3" class="emblem-logo"></div-->
-    </div>
-    <div class="cc" :class="[ 'g-cursor', { 'g-cursor_hover': hover }, {'g-cursor_hide': hideCursor} ]">
-      <div :style="cursorCircle" class="g-cursor__circle"></div>
-      <div class="g-cursor__point" ref="point" :style="cursorPoint"></div>
-    </div>
-    <router-view :dataRef='dataRef' />
-  </div>
-</template>
-
 <script>
-
 export default {
   name: 'App',
   components: {
@@ -49,6 +19,9 @@ export default {
     }
   },
   computed: {
+    isMobile() {
+      return ( window.innerWidth < 768 ? true : false );
+    },
     cursorCircle() {
       return `transform: translateX(${this.xParent}px) translateY(${this.yParent}px) translateZ(0) translate3d(0, 0, 0);`
     },
@@ -124,8 +97,62 @@ export default {
 }
 </script>
 
+<template>
+  <div id="app">
+    <div v-if="step3" :class="(unveil ? 'swoop' : '' )" class="logo-loader"></div>
+    <div :class="(unveil ? 'loading-veil unveil' : 'loading-veil')">
+      <svg v-if="!step2 && !step3" width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle id="initial-logo" cx="100" cy="100" r="72.5" stroke="white" stroke-width="55"/>
+      </svg>
+      <div v-if="step2 && !step3" class="chunk-logo">
+        <div class="chunk-big">
+          <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M100 0C44.7715 0 0 44.7715 0 100C0 155.228 44.7715 200 100 200C155.228 200 200 155.228 200 100C200 44.7715 155.228 0 100 0ZM100 55.2504C75.2855 55.2504 55.2504 75.2855 55.2504 100C55.2504 124.715 75.2855 144.75 100 144.75C124.715 144.75 144.75 124.715 144.75 100C144.75 75.2855 124.715 55.2504 100 55.2504ZM200 99.8385H144.749C144.749 99.8923 144.75 99.9461 144.75 100C144.75 124.715 124.715 144.75 100 144.75C99.9461 144.75 99.8923 144.749 99.8385 144.749V200C99.8923 200 99.9461 200 100 200C155.228 200 200 155.228 200 100C200 99.9461 200 99.8923 200 99.8385Z" fill="white"/>
+          </svg>
+        </div>
+        <div class="chunk-small">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M99.9999 2.41118e-06L44.8384 0C44.8386 0.0537423 44.8387 0.107507 44.8387 0.161294C44.8387 24.836 24.8359 44.8387 0.16129 44.8387C0.107505 44.8387 0.0537411 44.8386 0 44.8384V99.9999C0.0537535 100 0.107517 100 0.16129 100C55.3007 100 100 55.3007 100 0.161294C100 0.10752 100 0.0537562 99.9999 2.41118e-06Z" fill="#FFFFFF"/>
+          </svg>
+        </div>
+      </div>
+      <!--div v-if="step3" class="emblem-logo"></div-->
+    </div>
+    <div class="cc" :class="[ 'g-cursor', { 'g-cursor_hover': hover }, {'g-cursor_hide': hideCursor} ]">
+      <div :style="cursorCircle" class="g-cursor__circle"></div>
+      <div class="g-cursor__point" ref="point" :style="cursorPoint"></div>
+    </div>
+    <div v-if="isMobile" class="mobile-top">
+      <div id="mobile-nav-button"></div>
+    </div>
+    <router-view :dataRef='dataRef' />
+  </div>
+</template>
+
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+.mobile-top {
+  position: absolute;
+  //background: red;
+  z-index: 9999;
+  height: 100px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#mobile-nav-button {
+  //background: yellow;
+  background-image: url("assets/icons/mobile-menu2.svg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 36px;
+  width: 36px;
+  margin-right: 24px;
+}
 
 @font-face {
   font-family: Podular;
@@ -460,9 +487,127 @@ body {
     }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 768px) {
+  .mobile-top {
+    background: linear-gradient(black, transparent);
+  }
+
   .g-cursor {
     display: none !important;
+  }
+
+  .logo {
+    width: 280px !important;
+  }
+
+  .swoop {
+    transform: translate(-50px, -50px) scale(0.25) !important;
+    transition: 2s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  #fp-nav {
+    display: none !important;
+    margin: 0px 0px 0px 13px !important;
+    transform: scale(0.7) !important;
+    top: 55px !important;
+  }
+
+  #landing-video {
+    width: auto !important;
+  }
+
+  .soc-container {
+    display: none !important;
+  }
+
+  .grid {
+    grid-template-columns: 1fr !important;
+    grid-gap: 12px !important;
+    width: 90vw !important;
+    height: 87.5vh !important;
+    padding-right: 12px !important;
+  }
+
+  img {
+    width: 350px !important;
+  }
+
+  .exit-button {
+    bottom: 24px !important;
+    right: auto !important;
+    left: 24px !important;
+    top: auto !important;
+    opacity: 0.3;
+  }
+
+  .slide-button {
+    height: 56px !important;
+    width: 56px !important;
+    opacity: 1 !important;
+    //filter: invert(1) !important;
+  }
+  
+  .arrow {
+    //width: 20px !important;
+    //height: 20px !important;
+  }
+
+  .arrows2 {
+    margin-top: 0px !important;
+    margin-right: 0px !important;
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .wave-container {
+    display: none;
+  }
+
+  .about-container {
+    flex-direction: column-reverse;
+  }
+
+  .image-slides {
+    height: 60vh !important;
+  }
+
+  .big-image2 {
+    height: 60vh !important;
+  }
+
+  .about-text {
+    height: 40vh !important;
+    align-items: flex-start !important;
+    margin-top: 12px !important;
+  }
+
+  .about-text-inner {
+    //margin-top: -110px !important;
+    margin-left: 0px !important;
+
+    p, .delay-enter {
+      font-size: 14px !important;
+    }
+  }
+
+  .bottom-bar {
+    height: 100px !important;
+    padding-right: 36px !important;
+  }
+
+  .bottom-bar2 {
+    height: 100px !important;
+    padding-left: 90px !important;
+    justify-content: flex-start !important;
+  }
+
+  .button-container {
+    transform: scale(0.7) translate(-60px, -32px) !important;
+
+  }
+
+  .back {
+    filter: invert(1) !important;
   }
 }
 </style>
