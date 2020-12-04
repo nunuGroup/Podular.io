@@ -1,8 +1,11 @@
 <script>
+import Home from '@/views/Home.vue';
+import store from './store';
+
 export default {
   name: 'App',
   components: {
-    //CustomCursor
+    Home
   },
   data() {
     return {
@@ -15,10 +18,14 @@ export default {
       yParent: 0,
       hover: false,
       hideCursor: false,
-      unveil: null
+      unveil: null,
+      navActive: true
     }
   },
   computed: {
+    activeSection() {
+      return store.state.activeSection;
+    },
     isMobile() {
       return ( window.innerWidth < 768 ? true : false );
     },
@@ -61,7 +68,8 @@ export default {
       console.clear();
       console.log(index);
       console.log('ROUTE HOME');
-      this.$refs.fullpage.api.moveTo(1);
+      this.navActive = false;
+      this.$refs.home.move(index);
     },
     moveCursor(e) {
       var self = this;
@@ -123,14 +131,84 @@ export default {
       <div class="g-cursor__point" ref="point" :style="cursorPoint"></div>
     </div>
     <div v-if="isMobile" class="mobile-top">
-      <div id="mobile-nav-button"></div>
+      <div @click="() => { navActive = !navActive }" id="mobile-nav-button" :class="( navActive ? 'nav-exit' : 'nav-open' )"></div>
     </div>
-    <router-view :dataRef='dataRef' />
+    <div v-if="isMobile" :class="( navActive ? 'mobileNav navActive' : 'mobileNav navInactive' )">
+      <ul>
+        <li :class="( activeSection == 0 ? 'active' : '' )" @click="handleNav(1)">Home</li>
+        <li :class="( activeSection == 1 ? 'active' : '' )" @click="handleNav(2)">About</li>
+        <li :class="( activeSection == 2 ? 'active' : '' )" @click="handleNav(3)">Modular Pods</li>
+        <li :class="( activeSection == 3 ? 'active' : '' )" @click="handleNav(4)">Customization</li>
+        <li :class="( activeSection == 4 ? 'active' : '' )" @click="handleNav(5)">Showroom</li>
+        <li :class="( activeSection == 5 ? 'active' : '' )" @click="handleNav(6)">Contact</li>
+      </ul>
+    </div>
+    <Home ref="home" :dataRef='dataRef'/>
   </div>
 </template>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+@font-face {
+  font-family: Podular;
+  src: url("assets/fonts/Podular/PODULAR.otf") format("opentype")
+}
+
+.nav-exit {
+  background-image: url("assets/icons/exit.svg");
+  transform: scale(0.8);
+}
+
+.nav-open {
+  background-image: url("assets/icons/mobile-menu2.svg");
+}
+
+.mobileNav {
+  font-family: 'Podular' !important;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0px;
+  z-index: 999;
+  height: 100vh;
+  width: 100%;
+  transition: 300ms;
+
+  ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    line-height: 4;
+
+    li {
+      font-size: 18px;
+      opacity: 0.4;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .active {
+      opacity: 1 !important;
+    }
+  }
+}
+
+.navActive {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.navInactive {
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
 
 .mobile-top {
   position: absolute;
@@ -145,18 +223,13 @@ export default {
 
 #mobile-nav-button {
   //background: yellow;
-  background-image: url("assets/icons/mobile-menu2.svg");
+  //background-image: url("assets/icons/mobile-menu2.svg");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   height: 36px;
   width: 36px;
   margin-right: 24px;
-}
-
-@font-face {
-  font-family: Podular;
-  src: url("assets/fonts/Podular/PODULAR.otf") format("opentype")
 }
 
 .fp-tooltip {
@@ -608,6 +681,10 @@ body {
 
   .back {
     filter: invert(1) !important;
+  }
+
+  .showroom-text {
+    width: 285px !important;
   }
 }
 </style>

@@ -1,5 +1,6 @@
 <script>
-import firebase from 'firebase'
+import firebase from 'firebase';
+import store from '../store';
 
 export default {
   name: 'Home',
@@ -92,7 +93,8 @@ export default {
     }
   },
   props: {
-    dataRef: Object
+    dataRef: Object,
+    handleNavigation: Function
   },
   components: {
 
@@ -103,6 +105,9 @@ export default {
   mounted() {
     this.fetchTestData();
     this.fetchText();
+
+    //this.$emit('navFunction',this.move);
+
     this.hideNav = true; //hide nav on landing page?
     var i = 0;
 
@@ -130,6 +135,7 @@ export default {
       console.log('direction: ', direction);
   
       this.activeSection = destination.index;
+      store.commit('updateActiveSection', this.activeSection);
 
       var video = document.getElementById('second-custom');
       //var nav = document.getElementById('fp-nav').stye.display = ( this.hideNav ? 'none' : 'block' );
@@ -488,11 +494,13 @@ export default {
       <!-- Contact -->
       <section style="background: black" class="section">
         <div class="page-container contact">
-          <div class="bio-img"></div>
-          <h1>Jasna Ostojich</h1>
-          <P>Founder & Executive President</P>
-          <p>info@cafebellas.com</p>
-          <p>847.922.0061</p>
+          <div :class="enterOn(6, 'default')" class="contact-container">
+            <div class="bio-img"></div>
+            <h1>Jasna Ostojich</h1>
+            <P>Founder & Executive President</P>
+            <p>info@cafebellas.com</p>
+            <p>847.922.0061</p>
+          </div>
         </div>
       </section>
 
@@ -502,6 +510,14 @@ export default {
 
 <style lang="scss" scoped>
 @import '../assets/styles/global';
+
+.contact-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 2;
+  flex-direction: column;
+}
 
 .gal-button {
   background: white !important;
