@@ -110,7 +110,7 @@ export default {
       this.currentImg = i;
       var aboutPath = this.imagesAbout[i];
       document.getElementById('big-image').style.backgroundImage = 'url(' +  require('@/' + aboutPath) + ')';
-      console.log(aboutPath);
+      //console.log(aboutPath);
       if(i == this.imagesAbout.length - 1) {
         i = 0;
       } else {

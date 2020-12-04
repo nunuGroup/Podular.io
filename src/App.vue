@@ -106,6 +106,7 @@ export default {
 
       this.xChild = e.clientX;
       this.yChild = e.clientY;
+
       setTimeout(() => {
         this.xParent = e.clientX - 20;
         this.yParent = e.clientY - 20;
@@ -125,6 +126,16 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+@font-face {
+  font-family: Podular;
+  src: url("assets/fonts/Podular/PODULAR.otf") format("opentype")
+}
+
+.fp-tooltip {
+  font-family: 'Podular' !important;
+  color: white;
+}
 
 .emblem-logo {
   //background: blue;
