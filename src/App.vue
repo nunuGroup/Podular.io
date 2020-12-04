@@ -19,7 +19,7 @@ export default {
       hover: false,
       hideCursor: false,
       unveil: null,
-      navActive: true
+      navActive: false
     }
   },
   computed: {
@@ -185,8 +185,8 @@ export default {
     line-height: 4;
 
     li {
-      font-size: 18px;
-      opacity: 0.4;
+      font-size: 22px;
+      opacity: 0.5;
 
       &:hover {
         opacity: 1;
@@ -645,11 +645,11 @@ body {
   }
 
   .big-image2 {
-    height: 60vh !important;
+    height: 50vh !important;
   }
 
   .about-text {
-    height: 40vh !important;
+    height: 50vh !important;
     align-items: flex-start !important;
     margin-top: 12px !important;
   }
