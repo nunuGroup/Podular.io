@@ -180,12 +180,13 @@ export default {
 
   ul {
     list-style: none;
+    margin-top: -40px !important;
     margin: 0px;
     padding: 0px;
     line-height: 4;
 
     li {
-      font-size: 22px;
+      font-size: 18px;
       opacity: 0.5;
 
       &:hover {
