@@ -598,7 +598,7 @@ body {
     grid-template-columns: 1fr !important;
     grid-gap: 12px !important;
     width: 90vw !important;
-    height: 87.5vh !important;
+    height: 80vh !important;
     padding-right: 12px !important;
   }
 
